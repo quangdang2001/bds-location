@@ -1,0 +1,191 @@
+/* Sinh tự động từ data/BDS.xlsx bằng `python3 tools/embed.py` — đừng sửa tay.
+   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)". */
+window.__BDS_DATA = {
+ "fields": [
+  "Link",
+  "Trạng thái",
+  "Contact",
+  "Giá",
+  "Location",
+  "Ngày đến hạn",
+  "Hy -  Review",
+  "Khoa - Review",
+  "Quang - Review",
+  "Ghi chú",
+  "Link (link)",
+  "Location (link)"
+ ],
+ "records": [
+  {
+   "Link": "https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.threads.com%2F%40chuyenchdv2920%2Fpost%2FDfKBZWUCY8x%3Fxmt%3DAQG0TuXCDZ--3DS3woBk3pyPFmGHG_X-a8nLbL06-d7ezi6Xn24eGC7XnndkbtjXMnIr6tQ%26slof%3D1%26fbclid%3DIwZXh0bgNhZW0CMTAAcGRvZgVicmlkETEwSEI4TTJtT0ZwaHpUNmtUc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHxBLfqZ228ymM91ou_MA336TxpF7fpR-qlNgFutwmihi8nlgVSTtgqyPHo9-_aem_O6mSyiUCBT_CUXivUSvaNw&h=AUDXF_zGA6bzwFpG2_m4ZwOJba5iPVekH9DL-IFknECoFhUqF7pu42ya9oQMkXtnP5V8Ixy2iuv41zJ05fzaUlh6U73YEkmcoaowkvDU70nk8rnN7Kq1NqICbc_cBlTfuexzcg",
+   "Link (link)": "https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.threads.com%2F%40chuyenchdv2920%2Fpost%2FDfKBZWUCY8x%3Fxmt%3DAQG0TuXCDZ--3DS3woBk3pyPFmGHG_X-a8nLbL06-d7ezi6Xn24eGC7XnndkbtjXMnIr6tQ%26slof%3D1%26fbclid%3DIwZXh0bgNhZW0CMTAAcGRvZgVicmlkETEwSEI4TTJtT0ZwaHpUNmtUc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHxBLfqZ228ymM91ou_MA336TxpF7fpR-qlNgFutwmihi8nlgVSTtgqyPHo9-_aem_O6mSyiUCBT_CUXivUSvaNw&h=AUDXF_zGA6bzwFpG2_m4ZwOJba5iPVekH9DL-IFknECoFhUqF7pu42ya9oQMkXtnP5V8Ixy2iuv41zJ05fzaUlh6U73YEkmcoaowkvDU70nk8rnN7Kq1NqICbc_cBlTfuexzcg",
+   "Trạng thái": "Chưa bắt đầu",
+   "Contact": "SDT",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "https://www.threads.com/@chen.homexinh/post/DfJceR1k7_p?xmt=AQG0T8Ctp19F5NxubgFv8XD6YYpQiDQ_rnwTpBx1owHnuA",
+   "Link (link)": "https://www.threads.com/@chen.homexinh/post/DfJceR1k7_p?xmt=AQG0T8Ctp19F5NxubgFv8XD6YYpQiDQ_rnwTpBx1owHnuA",
+   "Trạng thái": "Đang thực hiện",
+   "Contact": "038 548 6855",
+   "Giá": "9tr5",
+   "Location": "Binh Loi",
+   "Location (link)": "https://www.google.com/maps/place/Binh+Loi/data=!4m2!3m1!19sChIJ9wM_Od_SCjERCpgQf7XmJaY",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "5.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "Chưa bắt đầu",
+   "Contact": "SDT",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "Chưa bắt đầu",
+   "Contact": "SDT",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  },
+  {
+   "Link": "",
+   "Trạng thái": "",
+   "Contact": "",
+   "Giá": "",
+   "Location": "",
+   "Ngày đến hạn": "",
+   "Hy -  Review": "0.0",
+   "Khoa - Review": "0.0",
+   "Quang - Review": "0.0",
+   "Ghi chú": ""
+  }
+ ]
+};
