@@ -232,6 +232,22 @@ function parseDelimited(text) {
   return out.data.filter((r) => r && typeof r === 'object');
 }
 
+const XLSX_SRC = ['vendor/xlsx.full.min.js', 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'];
+
+/** SheetJS ~880 KB nên chỉ nạp khi thật sự mở file .xlsx. */
+function ensureXLSX() {
+  if (typeof XLSX !== 'undefined') return Promise.resolve(true);
+  if (ensureXLSX._p) return ensureXLSX._p;
+  const tryOne = (i) => i >= XLSX_SRC.length ? Promise.resolve(false) : new Promise((res) => {
+    const el = document.createElement('script');
+    el.src = XLSX_SRC[i];
+    el.onload  = () => res(typeof XLSX !== 'undefined' ? true : tryOne(i + 1));
+    el.onerror = () => { el.remove(); res(tryOne(i + 1)); };
+    document.head.appendChild(el);
+  });
+  return (ensureXLSX._p = tryOne(0));
+}
+
 /** Giống sheet_to_json nhưng giữ thêm hyperlink của từng ô thành cột "<Tên cột> (link)". */
 function sheetToRecords(ws) {
   const grid = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', raw: false, blankrows: false });
@@ -259,7 +275,12 @@ function readFile(file) {
   const name = file.name.toLowerCase();
   const fr = new FileReader();
   if (/\.xlsx?$/.test(name)) {
-    fr.onload = () => {
+    fr.onload = async () => {
+      status('Đang nạp bộ đọc Excel…');
+      if (!(await ensureXLSX())) {
+        status('Không nạp được bộ đọc Excel (cần mạng ở lần đầu). Hãy lưu bảng thành .csv rồi thử lại, hoặc dán dữ liệu ở mục 1.', 'bad');
+        return;
+      }
       try {
         const wb = XLSX.read(fr.result, { type: 'array', cellStyles: true });
         const ws = wb.Sheets[wb.SheetNames[0]];

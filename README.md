@@ -8,6 +8,8 @@ của trình duyệt — không gửi đi đâu.
 
 ![Giao diện, nền sáng](docs/preview-light.png)
 
+Bản dùng online: **https://quangdang2001.github.io/bds-location/**
+
 ## Chạy
 
 ```bash
@@ -86,15 +88,32 @@ Location, Trạng thái, Contact, Ngày đến hạn, Ghi chú,* và mọi cột
 `<Tên người> - Review` thành một tiêu chí chấm điểm riêng. Sai thì sửa trong
 *Dữ liệu → Gán cột*; lựa chọn được ghi nhớ.
 
+## Build & hosting
+
+`tools/build.py` nhét CSS, JS, thư viện và dữ liệu vào **một file HTML ~253 KB**,
+không phụ thuộc file nào khác — mở bằng `file://`, gửi qua chat hay upload đâu cũng chạy:
+
+```bash
+python3 tools/build.py
+```
+
+GitHub Actions (`.github/workflows/pages.yml`) chạy đúng lệnh đó ở mỗi lần push rồi
+deploy lên GitHub Pages, nên bản online không bao giờ cũ hơn mã nguồn.
+
+Ngoại lệ duy nhất không gộp vào: **SheetJS (~880 KB)**, chỉ dùng khi tải file `.xlsx`
+trong trình duyệt — nạp từ CDN lúc cần nên trang thường ngày vẫn nhẹ.
+
 ## Cấu trúc
 
 ```
-index.html          khung giao diện
+index.html          khung giao diện (bản nhiều file, để phát triển)
 assets/style.css    bảng màu sáng/tối, bố cục
 assets/app.js       nạp dữ liệu, chấm điểm, bản đồ, lọc
 data/BDS.xlsx       bảng gốc
 data/dataset.js     dữ liệu nhúng, sinh từ BDS.xlsx
 tools/embed.py      BDS.xlsx  →  dataset.js (giữ hyperlink)
+tools/build.py      tất cả     →  docs/index.html (một file)
+docs/index.html     BẢN BUILD — sinh tự động, đừng sửa tay
 vendor/             Leaflet, PapaParse, SheetJS
 ```
 
