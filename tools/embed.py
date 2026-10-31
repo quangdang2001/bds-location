@@ -4,7 +4,7 @@
 Google Sheets xuất CSV sẽ mất hyperlink, nên bảng gốc phải lấy từ .xlsx.
 Chạy lại sau mỗi lần tải bảng mới:  python3 tools/embed.py
 """
-import json, re, sys, zipfile
+import argparse, json, re, sys, zipfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -14,6 +14,39 @@ NS = {
     'p': 'http://schemas.openxmlformats.org/package/2006/relationships',
 }
 ROOT = Path(__file__).resolve().parent.parent
+
+# Repo là public và dataset.js được build thẳng vào trang web, nên số điện
+# thoại bị che theo mặc định. Dùng --keep-contacts khi build bản chỉ dùng
+# ở máy mình.
+CONTACT_COL = re.compile(r'contact|lien he|sdt|so dien thoai|dien thoai|phone|zalo', re.I)
+PHONE = re.compile(r'(?<!\d)(0\d{1,2}[.\s-]?\d{3}[.\s-]?\d{3,4})(?!\d)')
+
+
+def no_accent(s):
+    import unicodedata
+    return ''.join(c for c in unicodedata.normalize('NFD', s)
+                   if unicodedata.category(c) != 'Mn').replace('đ', 'd').replace('Đ', 'D')
+
+
+def mask(num: str) -> str:
+    d = re.sub(r'\D', '', num)
+    return f'{d[:3]} •••• {d[-2:]}' if len(d) >= 7 else '••••'
+
+
+def redact(records):
+    """Che mọi thứ trông giống số điện thoại, ở cột liên hệ lẫn trong ghi chú."""
+    n = 0
+    for rec in records:
+        for k, v in list(rec.items()):
+            if not isinstance(v, str) or not v:
+                continue
+            new = PHONE.sub(lambda m: mask(m.group(1)), v)
+            if new == v and CONTACT_COL.search(no_accent(k)) and sum(c.isdigit() for c in v) >= 7:
+                new = mask(v)                      # cột liên hệ, định dạng lạ
+            if new != v:
+                rec[k] = new
+                n += 1
+    return n
 SRC  = ROOT / 'data' / 'BDS.xlsx'
 OUT  = ROOT / 'data' / 'dataset.js'
 
@@ -27,6 +60,11 @@ def row_of(ref):            # "E3" -> 3
 
 
 def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--keep-contacts', action='store_true',
+                    help='giữ nguyên số điện thoại (chỉ dùng cho bản chạy ở máy mình)')
+    keep = ap.parse_args().keep_contacts
+
     if not SRC.exists():
         sys.exit(f'không thấy {SRC}')
     z = zipfile.ZipFile(SRC)
@@ -85,6 +123,8 @@ def main():
         if any(str(v).strip() for v in rec.values()):
             records.append(rec)
 
+    hidden = 0 if keep else redact(records)
+
     fields = list(dict.fromkeys(headers.values()))
     for r in records:
         for f in r:
@@ -93,11 +133,14 @@ def main():
 
     OUT.write_text(
         '/* Sinh tự động từ data/BDS.xlsx bằng `python3 tools/embed.py` — đừng sửa tay.\n'
-        '   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)". */\n'
+        '   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)". */\n' +
+        ('' if keep else '   Số điện thoại đã được che (xem tools/embed.py). Chạy với --keep-contacts\n'
+                        '   để sinh bản đầy đủ cho máy mình; đừng commit bản đó.\n') +
         'window.__BDS_DATA = ' +
         json.dumps({'fields': fields, 'records': records}, ensure_ascii=False, indent=1) +
         ';\n', encoding='utf-8')
-    print(f'{OUT.relative_to(ROOT)}: {len(records)} dòng, {len(fields)} cột, {len(links)} hyperlink')
+    print(f'{OUT.relative_to(ROOT)}: {len(records)} dòng, {len(fields)} cột, {len(links)} hyperlink'
+          + ('' if keep else f', đã che {hidden} số điện thoại'))
 
 
 if __name__ == '__main__':

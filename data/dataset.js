@@ -1,5 +1,7 @@
 /* Sinh tự động từ data/BDS.xlsx bằng `python3 tools/embed.py` — đừng sửa tay.
    Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)". */
+   Số điện thoại đã được che (xem tools/embed.py). Chạy với --keep-contacts
+   để sinh bản đầy đủ cho máy mình; đừng commit bản đó.
 window.__BDS_DATA = {
  "fields": [
   "Link",
@@ -33,7 +35,7 @@ window.__BDS_DATA = {
    "Link": "https://www.threads.com/@chen.homexinh/post/DfJceR1k7_p?xmt=AQG0T8Ctp19F5NxubgFv8XD6YYpQiDQ_rnwTpBx1owHnuA",
    "Link (link)": "https://www.threads.com/@chen.homexinh/post/DfJceR1k7_p?xmt=AQG0T8Ctp19F5NxubgFv8XD6YYpQiDQ_rnwTpBx1owHnuA",
    "Trạng thái": "Đang thực hiện",
-   "Contact": "038 548 6855",
+   "Contact": "038 •••• 55",
    "Giá": "9tr5",
    "Location": "Binh Loi",
    "Location (link)": "https://www.google.com/maps/place/Binh+Loi/data=!4m2!3m1!19sChIJ9wM_Od_SCjERCpgQf7XmJaY",

@@ -630,7 +630,9 @@ function renderCards(rows) {
         <button class="mini is-off" data-act="out" aria-pressed="${mark === 'out'}">Loại</button>
         ${r.link ? `<a class="mini" href="${esc(r.link)}" target="_blank" rel="noopener">Mở tin ↗</a>` : ''}
         ${r.geoLink ? `<a class="mini" href="${esc(r.geoLink)}" target="_blank" rel="noopener">Maps ↗</a>` : ''}
-        ${r.contact && /\d{6}/.test(r.contact) ? `<a class="mini" href="tel:${esc(r.contact.replace(/\s/g, ''))}">${esc(r.contact)}</a>` : ''}
+        ${r.contact && /\d{6}/.test(r.contact) && !r.contact.includes('•')
+          ? `<a class="mini" href="tel:${esc(r.contact.replace(/\s/g, ''))}">${esc(r.contact)}</a>`
+          : r.contact.includes('•') ? `<span class="mini" title="Số bị che trong bản công khai — mở data/BDS.xlsx để xem đủ">${esc(r.contact)}</span>` : ''}
       </div>
     </article>`;
   }).join('');
@@ -777,14 +779,14 @@ function exportCsv() {
 /* ───────────────────── 10. Dữ liệu mẫu ───────────────────── */
 
 const SAMPLE = `Link,Trạng thái,Contact,Giá,Location,Ngày đến hạn,Hy -  Review,Khoa - Review,Quang - Review,Ghi chú
-https://example.com/t1,Đang thực hiện,038 548 6855,4tr5,"Bình Lợi, Bình Thạnh",2026-11-10,5,4,4,Gác lửng, có cửa sổ
-https://example.com/t2,Chưa bắt đầu,090 111 2233,3tr2,"Phạm Văn Đồng, Gò Vấp",,4,3,5,Hơi xa chợ
-https://example.com/t3,Đang thực hiện,091 222 3344,6tr,"Nguyễn Thị Minh Khai, Quận 3",2026-11-05,3,5,4,Trung tâm, giá cao
-https://example.com/t4,Chưa bắt đầu,097 333 4455,2tr8,"Tân Sơn Nhì, Tân Phú",,3,2,3,Phòng nhỏ
-https://example.com/t5,Đã xong,098 444 5566,5tr,"Thảo Điền, Quận 2",2026-11-20,5,5,3,Đẹp nhưng xa chỗ làm
-https://example.com/t6,Chưa bắt đầu,039 555 6677,3tr9,"Lê Văn Việt, Quận 9",,2,3,4,Gần ĐH
-https://example.com/t7,Đang thực hiện,035 666 7788,4tr2,"Cộng Hòa, Tân Bình",2026-11-12,4,4,4,Yên tĩnh
-https://example.com/t8,Chưa bắt đầu,036 777 8899,7tr5,"Phú Mỹ Hưng, Quận 7",,5,3,2,Vượt ngân sách`;
+https://example.com/t1,Đang thực hiện,0000 000 000,4tr5,"Bình Lợi, Bình Thạnh",2026-11-10,5,4,4,Gác lửng, có cửa sổ
+https://example.com/t2,Chưa bắt đầu,0000 000 000,3tr2,"Phạm Văn Đồng, Gò Vấp",,4,3,5,Hơi xa chợ
+https://example.com/t3,Đang thực hiện,0000 000 000,6tr,"Nguyễn Thị Minh Khai, Quận 3",2026-11-05,3,5,4,Trung tâm, giá cao
+https://example.com/t4,Chưa bắt đầu,0000 000 000,2tr8,"Tân Sơn Nhì, Tân Phú",,3,2,3,Phòng nhỏ
+https://example.com/t5,Đã xong,0000 000 000,5tr,"Thảo Điền, Quận 2",2026-11-20,5,5,3,Đẹp nhưng xa chỗ làm
+https://example.com/t6,Chưa bắt đầu,0000 000 000,3tr9,"Lê Văn Việt, Quận 9",,2,3,4,Gần ĐH
+https://example.com/t7,Đang thực hiện,0000 000 000,4tr2,"Cộng Hòa, Tân Bình",2026-11-12,4,4,4,Yên tĩnh
+https://example.com/t8,Chưa bắt đầu,0000 000 000,7tr5,"Phú Mỹ Hưng, Quận 7",,5,3,2,Vượt ngân sách`;
 
 /* ───────────────────── 11. Gắn sự kiện ───────────────────── */
 

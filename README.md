@@ -66,7 +66,24 @@ Ba cách, không cách nào cần sửa code:
 ```bash
 cp bảng-mới.xlsx data/BDS.xlsx
 python3 tools/embed.py
+python3 tools/build.py
 ```
+
+## Số điện thoại
+
+Repo này **public**, và `data/dataset.js` được nhúng thẳng vào trang web, nên
+`tools/embed.py` **che số điện thoại theo mặc định**: `038 548 6855` → `038 •••• 55`.
+Cần bản đầy đủ để dùng ở máy mình:
+
+```bash
+python3 tools/embed.py --keep-contacts   # ĐỪNG commit kết quả
+```
+
+`data/*.xlsx` nằm trong `.gitignore` vì bảng gốc chứa số chưa che — giữ file đó
+ở Drive hoặc máy bạn, đừng đẩy lên.
+
+> Số điện thoại cũ vẫn còn trong **lịch sử git** (các commit trước `e810d12`).
+> Nếu cần xoá hẳn thì phải viết lại lịch sử và force-push.
 
 ## Tìm toạ độ
 
