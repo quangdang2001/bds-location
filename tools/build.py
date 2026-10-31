@@ -6,7 +6,7 @@ Chạy lại sau mỗi lần sửa index.html, assets/* hoặc data/dataset.js:
     python3 tools/build.py              # -> docs/index.html
     python3 tools/build.py --out dist   # dùng trong GitHub Actions
 """
-import argparse, base64, mimetypes, re, sys
+import argparse, base64, mimetypes, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -39,6 +39,21 @@ def inline_css_assets(css: str, base: Path) -> str:
     return re.sub(r'url\(([^)]+)\)', sub, css)
 
 
+def check_syntax(name: str, js: str) -> None:
+    """Chặn lỗi cú pháp trước khi gộp — một file hỏng làm chết cả trang mà
+    không có dấu hiệu gì, vì trình duyệt chỉ im lặng bỏ qua khối <script> đó."""
+    if not shutil.which('node'):
+        print(f'  (bỏ qua kiểm tra cú pháp {name}: không có node)')
+        return
+    with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as f:
+        f.write(js)
+        tmp = f.name
+    r = subprocess.run(['node', '--check', tmp], capture_output=True, text=True)
+    Path(tmp).unlink()
+    if r.returncode:
+        sys.exit(f'{name} có lỗi cú pháp:\n{r.stderr.strip()}')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out', default='docs', help='thư mục xuất (mặc định: docs)')
@@ -69,6 +84,7 @@ def main():
         if src.startswith('http') or src in SKIP:
             return m.group(0)
         js = read(src)
+        check_syntax(src, js)
         # </script> trong chuỗi JS sẽ đóng thẻ sớm
         js = js.replace('</script>', '<\\/script>')
         return f'<script>\n/* {src} */\n{js}\n</script>'

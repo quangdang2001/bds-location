@@ -188,6 +188,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 }
 .map-wrap { position: relative; min-height: 320px; }
 #map { position: absolute; inset: 0; background: var(--surface-2); }
+/* Nền tối: đảo màu lớp tile OSM. Chỉ tác động lên tile, ghim và popup giữ nguyên. */
+#map.map-dark .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.7);
+}
 
 .map-panel {
   position: absolute; z-index: 500;

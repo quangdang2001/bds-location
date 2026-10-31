@@ -861,6 +861,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 }
 .map-wrap { position: relative; min-height: 320px; }
 #map { position: absolute; inset: 0; background: var(--surface-2); }
+/* Nền tối: đảo màu lớp tile OSM. Chỉ tác động lên tile, ghim và popup giữ nguyên. */
+#map.map-dark .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.7);
+}
 
 .map-panel {
   position: absolute; z-index: 500;
@@ -1226,9 +1230,10 @@ License: MIT
 <script>
 /* data/dataset.js */
 /* Sinh tự động từ data/BDS.xlsx bằng `python3 tools/embed.py` — đừng sửa tay.
-   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)". */
-   Số điện thoại đã được che (xem tools/embed.py). Chạy với --keep-contacts
-   để sinh bản đầy đủ cho máy mình; đừng commit bản đó.
+   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)".
+   Số điện thoại đã được che. Chạy với --keep-contacts để sinh bản
+   đầy đủ cho máy mình; đừng commit bản đó.
+*/
 window.__BDS_DATA = {
  "fields": [
   "Link",
@@ -1860,25 +1865,27 @@ function visible() {
 
 /* ───────────────────── 5. Bản đồ ───────────────────── */
 
-let map, layer, anchorMarker, markers = new Map(), tileLight, tileDark;
+let map, layer, anchorMarker, markers = new Map();
 
 function initMap() {
   map = L.map('map', { zoomControl: false, attributionControl: true }).setView([10.776, 106.701], 12);
   L.control.zoom({ position: 'topright' }).addTo(map);   // tránh đè lên ô “Điểm neo”
-  const attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
-  tileLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 20, attribution: attr });
-  tileDark  = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',  { maxZoom: 20, attribution: attr });
+  // Nền OpenStreetMap: miễn phí, không cần API key.
+  // (CARTO basemaps đã chuyển sang bắt buộc khoá, nên không dùng được nữa.)
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
   layer = L.layerGroup().addTo(map);
   applyTiles();
   map.on('click', (e) => setAnchor(e.latlng.lat, e.latlng.lng, 'Điểm đã chọn trên bản đồ'));
 }
 
+/** Chỉ có một bộ tile; nền tối làm bằng bộ lọc CSS lên lớp tile. */
 function applyTiles() {
-  if (!map) return;
-  const dark = document.documentElement.getAttribute('data-theme') === 'dark' ||
-    (document.documentElement.getAttribute('data-theme') !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
-  (dark ? tileDark : tileLight).addTo(map);
-  map.removeLayer(dark ? tileLight : tileDark);
+  const t = document.documentElement.getAttribute('data-theme');
+  const dark = t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.getElementById('map')?.classList.toggle('map-dark', dark);
 }
 
 function pinIcon(r, hot) {

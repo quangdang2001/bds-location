@@ -133,9 +133,11 @@ def main():
 
     OUT.write_text(
         '/* Sinh tự động từ data/BDS.xlsx bằng `python3 tools/embed.py` — đừng sửa tay.\n'
-        '   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)". */\n' +
-        ('' if keep else '   Số điện thoại đã được che (xem tools/embed.py). Chạy với --keep-contacts\n'
-                        '   để sinh bản đầy đủ cho máy mình; đừng commit bản đó.\n') +
+        '   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)".\n' +
+        ('' if keep else
+         '   Số điện thoại đã được che. Chạy với --keep-contacts để sinh bản\n'
+         '   đầy đủ cho máy mình; đừng commit bản đó.\n') +
+        '*/\n'
         'window.__BDS_DATA = ' +
         json.dumps({'fields': fields, 'records': records}, ensure_ascii=False, indent=1) +
         ';\n', encoding='utf-8')

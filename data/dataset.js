@@ -1,7 +1,8 @@
 /* Sinh tự động từ data/BDS.xlsx bằng `python3 tools/embed.py` — đừng sửa tay.
-   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)". */
-   Số điện thoại đã được che (xem tools/embed.py). Chạy với --keep-contacts
-   để sinh bản đầy đủ cho máy mình; đừng commit bản đó.
+   Giữ cả hyperlink của từng ô dưới dạng cột "<Tên cột> (link)".
+   Số điện thoại đã được che. Chạy với --keep-contacts để sinh bản
+   đầy đủ cho máy mình; đừng commit bản đó.
+*/
 window.__BDS_DATA = {
  "fields": [
   "Link",

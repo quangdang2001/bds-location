@@ -436,25 +436,27 @@ function visible() {
 
 /* ───────────────────── 5. Bản đồ ───────────────────── */
 
-let map, layer, anchorMarker, markers = new Map(), tileLight, tileDark;
+let map, layer, anchorMarker, markers = new Map();
 
 function initMap() {
   map = L.map('map', { zoomControl: false, attributionControl: true }).setView([10.776, 106.701], 12);
   L.control.zoom({ position: 'topright' }).addTo(map);   // tránh đè lên ô “Điểm neo”
-  const attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
-  tileLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 20, attribution: attr });
-  tileDark  = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',  { maxZoom: 20, attribution: attr });
+  // Nền OpenStreetMap: miễn phí, không cần API key.
+  // (CARTO basemaps đã chuyển sang bắt buộc khoá, nên không dùng được nữa.)
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
   layer = L.layerGroup().addTo(map);
   applyTiles();
   map.on('click', (e) => setAnchor(e.latlng.lat, e.latlng.lng, 'Điểm đã chọn trên bản đồ'));
 }
 
+/** Chỉ có một bộ tile; nền tối làm bằng bộ lọc CSS lên lớp tile. */
 function applyTiles() {
-  if (!map) return;
-  const dark = document.documentElement.getAttribute('data-theme') === 'dark' ||
-    (document.documentElement.getAttribute('data-theme') !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
-  (dark ? tileDark : tileLight).addTo(map);
-  map.removeLayer(dark ? tileLight : tileDark);
+  const t = document.documentElement.getAttribute('data-theme');
+  const dark = t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.getElementById('map')?.classList.toggle('map-dark', dark);
 }
 
 function pinIcon(r, hot) {

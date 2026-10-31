@@ -19,8 +19,9 @@ python3 -m http.server 8000
 Rồi mở http://localhost:8000 . Mở thẳng `index.html` bằng `file://` cũng được
 (dữ liệu đã nhúng sẵn trong `data/dataset.js`).
 
-Trang cần mạng cho **nền bản đồ** (CARTO/OpenStreetMap) và **tra toạ độ**
-(Nominatim). Thư viện Leaflet / PapaParse / SheetJS đã để sẵn trong `vendor/`
+Trang cần mạng cho **nền bản đồ** và **tra toạ độ**, cả hai đều từ
+OpenStreetMap và không cần API key. Nền tối dùng bộ lọc CSS lên lớp tile,
+không phải một bộ tile riêng. Thư viện Leaflet / PapaParse / SheetJS đã để sẵn trong `vendor/`
 nên không phụ thuộc CDN.
 
 ## Cách dùng
