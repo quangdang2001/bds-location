@@ -6,6 +6,8 @@ bảng theo dõi `BDS` (Google Sheets).
 Một trang tĩnh, không backend. Toàn bộ dữ liệu và đánh dấu nằm trong `localStorage`
 của trình duyệt — không gửi đi đâu.
 
+![Giao diện, nền sáng](docs/preview-light.png)
+
 ## Chạy
 
 ```bash
